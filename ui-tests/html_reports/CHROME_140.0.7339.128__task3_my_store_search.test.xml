@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="2"
+            tests="1">
+
+  <testsuite name="task3_my_store_search.test" id="task3_my_store_search.test"
+    errors="0" failures="2" hostname="" package="task3_my_store_search.test" skipped="0"
+    tests="1" time="20.80" timestamp="">
+  
+    <testcase name="My Store Search for &#34;dress&#34; Flow" classname="task3_my_store_search.test" time="20.80" assertions="11">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Verifying product 6 contains &#34;Dress&#34; in the name in 5000ms - expected &#34;contains text &#39;Dress&#39;&#34; but got: &#34;does not contain &#39;Dress&#39;&#34; (5056ms)">    at Page.verifyProductContainsText (E:\SDET-TECH TASK\Code\ui-tests\pages\task3_my_store_page.js:50:30)
+    at E:\SDET-TECH TASK\Code\ui-tests\tests\task3_my_store_search.test.js:31:19
+    at NightwatchAPI.&lt;anonymous&gt; (E:\SDET-TECH TASK\Code\ui-tests\pages\task3_my_store_page.js:39:9)</failure>
+
+      <failure message="Verifying product 7 contains &#34;Dress&#34; in the name in 5000ms - expected &#34;contains text &#39;Dress&#39;&#34; but got: &#34;does not contain &#39;Dress&#39;&#34; (5527ms)">    at Page.verifyProductContainsText (E:\SDET-TECH TASK\Code\ui-tests\pages\task3_my_store_page.js:50:30)
+    at E:\SDET-TECH TASK\Code\ui-tests\tests\task3_my_store_search.test.js:31:19
+    at NightwatchAPI.&lt;anonymous&gt; (E:\SDET-TECH TASK\Code\ui-tests\pages\task3_my_store_page.js:39:9)</failure>
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>

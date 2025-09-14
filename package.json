@@ -1,0 +1,33 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:UI": "nightwatch --config ./ui-tests/nightwatch.conf.js",
+    "dev": "nodemon ./node_modules/mock-user-auth/bin/www.js",
+    "test:create": "jest ./api-tests/__tests__/task4_create_user.test.js",
+    "test:authenticate": "jest ./api-tests/__tests__/task4_authenticate_user.test.js",
+    "test:get": "jest ./api-tests/__tests__/task4_get_user.test.js",
+    "test:update": "jest ./api-tests/__tests__/task4_update_user.test.js",
+    "test:delete": "jest ./api-tests/__tests__/task4_delete_user.test.js",
+    "start:jest": "jest --config ./api-tests/jest.config.js --runInBand",
+    "test:API:unix": "concurrently -k \"npm run dev > api_server.log\" \"sleep 5 && npm run start:jest\"",
+    "test:API:win": "concurrently -k \"npm run dev > api_server.log\" \"powershell -Command Start-Sleep -Seconds 5; npm run start:jest\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chromedriver": "^140.0.2",
+    "concurrently": "^9.2.1",
+    "geckodriver": "^6.0.1",
+    "jest-html-reporter": "^4.3.0",
+    "mock-user-auth": "^1.0.15",
+    "nightwatch": "^3.12.2"
+  },
+  "dependencies": {
+    "jest": "^30.1.3",
+    "supertest": "^7.1.4"
+  }
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="1">
+
+  <testsuite name="task2_linkedin_register.test" id="task2_linkedin_register.test"
+    errors="0" failures="0" hostname="" package="task2_linkedin_register.test" skipped="0"
+    tests="1" time="12.56" timestamp="">
+  
+    <testcase name="LinkedIn Registration Flow" classname="task2_linkedin_register.test" time="12.56" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>
