@@ -104,8 +104,7 @@ describe('User Delete API', () => {
     console.log('Request: GET /api/v1/users');
     console.log('Response:', response.statusCode, response.body);
 
-    if (![404, 405].includes(response.statusCode)) {
-      throw new Error(`Expected status 404 or 405, but received ${response.statusCode}`);
-    }
+    expect([404, 405]).toContain(response.statusCode);
+    expect(response.body).toHaveProperty('message');
   });
 });
