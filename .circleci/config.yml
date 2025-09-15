@@ -34,6 +34,4 @@ workflows:
   test_pipeline:
     jobs:
       - ui-tests
-      - api-tests:
-          requires:
-            - ui-tests
+      - api-tests
