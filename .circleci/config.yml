@@ -1,9 +1,9 @@
-.version: 2.1
+version: 2.1
 
 executors:
   node-executor:
     docker:
-      - image: cimg/node:22.8  # choose Node version close to yours
+      - image: cimg/node:22.8
     working_directory: ~/project
 
 jobs:
@@ -15,10 +15,8 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Run UI tests (Nightwatch)
+          name: Run UI tests
           command: npm run test:UI
-      - store_artifacts: # optional, save reports
-          path: reports/ui
 
   api-tests:
     executor: node-executor
@@ -28,12 +26,11 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
-          name: Run API tests (Supertest + mock-auth)
+          name: Run API tests
           command: npm run test:API:win
-      - store_artifacts:
-          path: reports/api
 
 workflows:
+  version: 2
   test_pipeline:
     jobs:
       - ui-tests
