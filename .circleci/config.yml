@@ -1,42 +1,82 @@
 version: 2.1
 
+orbs:
+  browsers: circleci/browser-tools@1.4.8
+
 executors:
-  node-executor:
+  node-browsers:
     docker:
-      - image: cimg/node:22.8
-    working_directory: ~/project
+      - image: cimg/node:18.14.0-browsers
+  node-basic:
+    docker:
+      - image: cimg/node:18.14.0
 
 jobs:
-  ui-tests:
-    executor: node-executor
+  deps-setup:
+    executor: node-browsers
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - npm-cache-{{ checksum "package-lock.json" }}
+            - npm-cache-
       - run:
-          name: Install dependencies
-          command: npm install
+          name: Install project dependencies
+          command: npm ci
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: npm-cache-{{ checksum "package-lock.json" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  ui-tests:
+    executor: node-browsers
+    steps:
+      - attach_workspace:
+          at: .
+      - browsers/install-chrome
+      - browsers/install-chromedriver
       - run:
-          name: Fix Nightwatch permissions
-          command: chmod +x ./node_modules/.bin/nightwatch
+          name: Verify Chrome setup
+          command: |
+            google-chrome --version
+            chromedriver --version
       - run:
-          name: Run UI tests
+          name: Execute Nightwatch tests
           command: npm run test:UI
 
   api-tests:
-    executor: node-executor
+    executor: node-basic
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Run API tests
-          command: npm run test:API:win
+          name: Execute API test suite
+          command: npm run test:API:unix
+      - store_artifacts:
+          path: api_server.log
+          destination: logs/api
 
 workflows:
   version: 2
-  test_pipeline:
+  pipeline:
     jobs:
-      - ui-tests
+      - deps-setup:
+          filters:
+            branches:
+              only: main
+      - ui-tests:
+          requires:
+            - deps-setup
+          filters:
+            branches:
+              only: main
       - api-tests:
           requires:
-            - ui-tests
+            - deps-setup
+          filters:
+            branches:
+              only: main
