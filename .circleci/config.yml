@@ -15,6 +15,9 @@ jobs:
           name: Install dependencies
           command: npm install
       - run:
+          name: Fix Nightwatch permissions
+          command: chmod +x ./node_modules/.bin/nightwatch
+      - run:
           name: Run UI tests
           command: npm run test:UI
 
@@ -34,4 +37,6 @@ workflows:
   test_pipeline:
     jobs:
       - ui-tests
-      - api-tests
+      - api-tests:
+          requires:
+            - ui-tests
