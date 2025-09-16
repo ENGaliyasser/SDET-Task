@@ -55,8 +55,8 @@ This repository contains **UI and API automated tests** for different scenarios,
 
 ### 🔹 PDF Reports
 
-* [📄 Bug Reports (PDF)](reports/bug_reports/)
-* [📄 Test Cases (PDF)](reports/test_cases/)
+* [📄 Bug Reports (PDF)](reports/bug_report.pdf)
+* [📄 Test Cases (PDF)](reports/test_cases.pdf)
 
 ### 🔹 Task Mapping
 
