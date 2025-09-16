@@ -62,7 +62,7 @@ This repository contains **UI and API automated tests** for different scenarios,
 
 * **Task 1 – Sample Site Review Automation**
 
-  * [Navigation Page Object](ui-tests/tests/task1_navigation_page.js)
+  * [Navigation Page Object](ui-tests/pages/task1_navigation_page.js)
   * [Navigation Test](ui-tests/tests/task1_navigation.test.js)
 
 * **Task 2 – LinkedIn Registration**
