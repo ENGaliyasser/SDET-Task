@@ -33,19 +33,24 @@ describe('User Creation API', () => {
   // Use user1 as the duplicate user for duplicate test
   const duplicateUser = { ...user1 };
 
-  beforeAll(async () => {
-    // Ensure all users are deleted before testing
-    await request()
-      .delete('/api/v1/all-users')
-      .send({ key_admin: adminKey });
-  });
+    // 1. Ensure all users are deleted before testing
+    beforeEach(async () => {
+        const response = await request()
+            .delete('/api/v1/all-users')
+            .send({
+                key_admin: 'keyadmin123'
+            });
 
-  afterAll(async () => {
-    // Clean up all users after tests
-    await request()
-      .delete('/api/v1/all-users')
-      .send({ key_admin: adminKey });
-  });
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toHaveProperty('message', 'Users deleted with success');
+    });
+
+    // Teardown: Use delete all endpoint with admin key if users are still present
+    afterAll(async () => {
+        await request()
+            .delete('/api/v1/all-users')
+            .send({ key_admin: 'keyadmin123' });
+    });
 
   /**
    * 1. Should create a user successfully with valid data.
@@ -60,7 +65,7 @@ describe('User Creation API', () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('message', 'User registered with success');
     // If requirements specify a token should be returned, uncomment the next line:
-    // expect(response.body).toHaveProperty('token');
+    //expect(response.body).toHaveProperty('token');
   });
 
   /**
@@ -76,30 +81,14 @@ describe('User Creation API', () => {
     expect(response.statusCode).toBe(200);
     expect(response.body).toHaveProperty('message', 'User registered with success');
     // If requirements specify a token should be returned, uncomment the next line:
-    // expect(response.body).toHaveProperty('token');
+    //expect(response.body).toHaveProperty('token');
   });
 
-  /**
-   * 3. (Optional) If requirements specify a token should be returned on success, test for token property.
-   */
-  it('3. should return a token property on successful registration if required', async () => {
-    const response = await request()
-      .post('/api/v1/users')
-      .send({
-        name: 'Ali',
-        email: 'ali@gmail.com',
-        password: 'password123'
-      });
-    // Only check for token if API requirements specify it
-    // Remove or comment this test if not required
-    expect(response.statusCode).toBe(200);
-    // expect(response.body).toHaveProperty('token');
-  });
 
   /**
-   * 4. Should return an error for already registered user.
+   * 3. Should return an error for already registered user.
    */
-  it('4. should return an error for already registered user', async () => {
+  it('3. should return an error for already registered user', async () => {
     console.log('Request (first create):', duplicateUser);
     await request()
       .post('/api/v1/users')
@@ -116,9 +105,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 5. Should return an error for missing required field: password.
+   * 4. Should return an error for missing required field: password.
    */
-  it('5. should return an error for missing required field (password)', async () => {
+  it('4. should return an error for missing required field (password)', async () => {
     const reqBody = { name: 'reda', email: 'reda@gmail.com' };
     console.log('Request:', reqBody);
     const response = await request()
@@ -131,9 +120,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 6. Should return an error for missing required field: name.
+   * 5. Should return an error for missing required field: name.
    */
-  it('6. should return an error for missing required field (name)', async () => {
+  it('5. should return an error for missing required field (name)', async () => {
     const reqBody = { email: 'anas@gmail.com', password: 'password123' };
     console.log('Request:', reqBody);
     const response = await request()
@@ -146,9 +135,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 7. Should return an error for missing required field: email.
+   * 6. Should return an error for missing required field: email.
    */
-  it('7. should return an error for missing required field (email)', async () => {
+  it('6. should return an error for missing required field (email)', async () => {
     const reqBody = { name: 'osama', password: 'password123' };
     console.log('Request:', reqBody);
     const response = await request()
@@ -161,23 +150,23 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 8. Should return an error for empty body.
+   * 7. Should return an error for empty body.
    */
-  it('8. should return an error for empty body', async () => {
+  it('7. should return an error for empty body', async () => {
     console.log('Request:', emptyBody);
     const response = await request()
       .post('/api/v1/users')
       .send(emptyBody);
     console.log('Response:', response.statusCode, response.body);
-
+    
     expect(response.statusCode).toBe(401);
     expect(response.body).toHaveProperty('message', 'Missing required fields');
   });
 
   /**
-   * 9. Should create a user successfully and ignore extra fields.
+   * 8. Should create a user successfully and ignore extra fields.
    */
-  it('9. should create a user successfully and ignore extra fields', async () => {
+  it('8. should create a user successfully and ignore extra fields', async () => {
     const reqBody = {
       name: 'Ali',
       email: 'ali@gmail.com',
@@ -198,9 +187,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 10. Should return an error for invalid email format.
+   * 9. Should return an error for invalid email format.
    */
-  it('10. should return an error for invalid email format', async () => {
+  it('9. should return an error for invalid email format', async () => {
     const reqBody = { name: 'Aly', email: 'invalid-email', password: 'password123' };
     console.log('Request:', reqBody);
     const response = await request()
@@ -213,9 +202,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 11. Should return an error for too short password.
+   * 10. Should return an error for too short password.
    */
-  it('11. should return an error for too short password', async () => {
+  it('10. should return an error for too short password', async () => {
     const reqBody = { name: 'Omar', email: 'omar@gmail.com', password: '123' };
     console.log('Request:', reqBody);
     const response = await request()
@@ -228,9 +217,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 12. Should fail with non-string types for name/email/password.
+   * 11. Should fail with non-string types for name/email/password.
    */
-  it('12. should return an error for non-string types for name/email/password', async () => {
+  it('11. should return an error for non-string types for name/email/password', async () => {
     const reqBody = { name: 123, email: 456, password: { obj: true } };
     console.log('Request:', reqBody);
     const response = await request()
@@ -243,9 +232,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 13. Should fail with whitespace-only name/email/password.
+   * 12. Should fail with whitespace-only name/email/password.
    */
-  it('13. should return an error for whitespace-only name/email/password', async () => {
+  it('12. should return an error for whitespace-only name/email/password', async () => {
     const reqBody = { name: '   ', email: '   ', password: '   ' };
     console.log('Request:', reqBody);
     const response = await request()
@@ -258,9 +247,9 @@ describe('User Creation API', () => {
   });
 
   /**
-   * 14. Should fail with null name/email/password.
+   * 13. Should fail with null name/email/password.
    */
-  it('14. should return an error for null name/email/password', async () => {
+  it('13. should return an error for null name/email/password', async () => {
     const reqBody = { name: null, email: null, password: null };
     console.log('Request:', reqBody);
     const response = await request()
