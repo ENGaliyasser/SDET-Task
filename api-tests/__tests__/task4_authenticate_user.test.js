@@ -5,7 +5,7 @@
  */
 
 const { request } = require('../utils/api_client');
-const testData = require('../test_data');
+const testData = require('../testData');
 
 describe('User Authentication API', () => {
   const {
