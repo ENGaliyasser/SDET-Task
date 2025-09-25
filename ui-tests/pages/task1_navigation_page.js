@@ -13,8 +13,8 @@ module.exports = {
   url: 'http://s3-design-sample-site.s3-website-us-west-2.amazonaws.com/',
   elements: {
     contactLink: 'a[href="contact.html"]',
-    homepageBody: 'body',
-    contactBody: 'body'
+    homepageBody: 'body span.style2',
+    contactBody: 'body table td.style2 p'
   },
   commands: [{
     /**
